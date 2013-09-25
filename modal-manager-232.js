@@ -24,7 +24,7 @@ var ModalManager = (function(){
 	var content = "";
 	var callback = null; // needs to be renamed (and all files that use it to callback_submit)
 	var remote_form_url = "";
-	var close_callback = null;
+	var callback_close = null;
 	var callback_open = null;
 	var ok_only = null;
 	var custom_button_text = null;
@@ -59,8 +59,8 @@ var ModalManager = (function(){
 				if(typeof(options.no_buttons)!='undefined'){
 					no_buttons = options.no_buttons;
 				}
-				if(typeof(options.close_callback)!='undefined'){
-					close_callback = options.close_callback;
+				if(typeof(options.callback_close)!='undefined'){
+					callback_close = options.callback_close;
 				}	
 				if(typeof(options.callback_open)!='undefined'){
 					callback_open = options.callback_open;
@@ -123,7 +123,7 @@ var ModalManager = (function(){
 						if (remote_form_url!='')
 							html+='</form>';
 					html+='</div>';
-				$('#popup-modal').html(html);
+				$('#modal-managed').html(html);
 				// remove both buttons	
 				sv_popup.custom_button_set('OK');
 				// Activate uploaduplad
@@ -184,9 +184,9 @@ var ModalManager = (function(){
 					$('#popup').modal();
 					$('#popup-submit').on('click', callback);
 				}
-				if (close_callback){
+				if (callback_close){
 					$('#popup').on('hidden', function () {
-					    close_callback();
+					    callback_close();
 					})
 				}
 
@@ -197,11 +197,11 @@ var ModalManager = (function(){
 			$('#popup').on('hidden', callback);
 			$('#popup').modal('hide');
 		},
-		set_close_callback:function(callback){
-			close_callback = callback;
+		set_callback_close:function(callback){
+			callback_close = callback;
 		},
-		get_close_callback:function(){
-			return close_callback;
+		get_callback_close:function(){
+			return callback_close;
 		},
 		remove_form_add_html:function(html){
 			$('#pre-modal-body').remove();
